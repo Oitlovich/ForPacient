@@ -10,7 +10,6 @@ namespace ForPacient
             if (!_initialized)
             {
                 _initialized = true;
-                Database.EnsureDeleted();
                 Database.EnsureCreated();
             }
         }
@@ -30,11 +29,11 @@ namespace ForPacient
 
             modelBuilder.Entity<User>().HasData(new List<User>()
             {
-               new User { Id = 1, Firstname = "Alexandr", Lastname = "Romanov", Age = 10, Email = "12321@", Phone = "149032", Password = "Sanyavernysotku", RoleId = 1}
+               new User { Id = 1, Firstname = "Alexandr", Lastname = "Romanov", Age = 10, Email = "12321@", Phone = "149032", Password = "Sanyavernysotku", RoleId = 1, MedCardId = 1}
             });
             modelBuilder.Entity<MedCard>().HasData(new List<MedCard>()
             {
-               new MedCard { Id = 1, Disease = "" UserId = ""}
+               new MedCard { Id = 1, Disease = "Сперма", Anamnez = "", Drugs = "", Recommends = "" }
             });
         }
     }

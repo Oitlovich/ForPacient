@@ -31,28 +31,32 @@ namespace ForPacient.Controllers
                 u.Email,
                 u.Phone,
                 u.Password,
-                u.Role.Role_name
+                u.Role
             });
 
             return Ok(viewModel);
         }
 
         [HttpGet]
-        [Route("get")]
+        [Route("medcard")]
         public async Task<IActionResult> GetUsers([FromQuery] int id)
         {
-            var user = await _context.Users.Include(p => p.Role).ToListAsync();
-            var viewModel = user.Select(u => new
+            var user = await _context.Users.Include(p => p.MedCard).Include(p => p.Role).FirstOrDefaultAsync(x => x.Id == id);
+
+            if (user == null) return BadRequest("User not found");
+
+            var viewModel = new
             {
-                u.Id,
-                u.Firstname,
-                u.Lastname,
-                u.Age,
-                u.Email,
-                u.Phone,
-                u.Password,
-                u.Role.Role_name
-            });
+                user.Id,
+                user.Firstname,
+                user.Lastname,
+                user.Age,
+                user.Email,
+                user.Phone,
+                user.Password,
+                user.Role,
+                user.MedCard,
+            };
 
             return Ok(viewModel);
         }
@@ -67,6 +71,8 @@ namespace ForPacient.Controllers
                 Age = viewModel.Age,
                 Email = viewModel.Email,
                 Phone = viewModel.Phone,
+                RoleId = viewModel.RoleId,
+                MedCardId = viewModel.MedCardId,
                 Password = viewModel.Password,
                 Firstname = viewModel.Firstname,
                 Lastname = viewModel.Lastname,
@@ -76,19 +82,5 @@ namespace ForPacient.Controllers
 
             return Ok();
         }
-        /*[HttpGet]
-        [Route("medcard")]
-        public async Task<IActionResult> MedCardAsync([FromQuery] int id)
-        {
-            var user = await _context.MedCard.Include(p => p.User).ToListAsync();
-            var viewModel = user.Select(u => new
-            {
-                u.Id,
-                u.UserId,
-                u.Disease
-            });
-
-            return Ok(viewModel);
-        }*/
     }
 }

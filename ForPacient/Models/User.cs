@@ -1,4 +1,6 @@
-﻿namespace ForPacient.Models
+﻿using System.Text.Json.Serialization;
+
+namespace ForPacient.Models
 {
     public class User
     {
@@ -19,9 +21,10 @@
         public int RoleId { get; set; }
 
         public Role Role { get; set; }
-        
-        public List<MedCard> MedCard { get; set; }
 
+        public int MedCardId { get; set; }
+
+        public MedCard MedCard { get; set; }
     }
 
 }
